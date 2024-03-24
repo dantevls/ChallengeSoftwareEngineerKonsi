@@ -1,0 +1,76 @@
+﻿version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_management
+    hostname: "rabbitmq"
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 35s
+      retries: 3
+    ports:
+      - 5672:5672 # (erlang) communication between the nodes and CLI tool
+      - 15672:15672 # communication with the web management API 
+    volumes:
+      - /docker_conf/rabbitmq/data/:/var/lib/rabbitmq/
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=123456
+    networks:
+      - my-network
+    restart: always
+
+  redis:
+    image: redis:latest
+    container_name: redis-container
+    ports:
+      - "6379:6379"
+    networks:
+      - my-network
+        
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
+    container_name: elasticsearch-server
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"  # Adjust memory settings as needed
+    ports:
+      - "9200:9200"  # Elasticsearch HTTP API port
+      - "9300:9300"  # Elasticsearch TCP transport port
+
+  consumerkonsicredit:
+    build: ./
+    ports:
+      - "5033:5015"
+    command: ["./Consumer.KonsiCredit"]
+    networks:
+      - my-network
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+
+  presentationkonsicredit:
+    build: ./
+    ports:
+      - "5030:5015"
+    command: ["./Presentation.KonsiCredit"]
+    networks:
+      - my-network
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    
+volumes:
+  logs-folder:
+    name: ${log_rabbitmq_management}
+    driver: local
+    
+networks:
+  my-network:  # Definir a rede personalizada
+
