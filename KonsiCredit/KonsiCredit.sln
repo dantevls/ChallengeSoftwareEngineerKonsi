@@ -1,0 +1,83 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{3DC4A82A-AA56-4C2E-A23B-D6D4CA679621}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.KonsiCredit", "Application\Application.KonsiCredit\Application.KonsiCredit.csproj", "{30C789EB-8793-4042-9759-FB3F31ED6EB5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{8C90A9CF-3E60-4FE9-B396-E423B19E0501}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.KonsiCredit", "Presentation\Presentation.KonsiCredit\Presentation.KonsiCredit.csproj", "{F81E15AE-9417-4871-8DFC-DB5E23ACE44F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{8F8B42D2-1D92-4E9E-BF4D-EACCEAAD5673}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.KonsiCredit", "Services\Services.KonsiCredit\Services.KonsiCredit.csproj", "{04560380-C3B8-4A70-9DB3-EF80CE139292}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{A13DD378-9D7C-4C1D-B835-687B28E9B5B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.KonsiCredit", "Domain\Domain.KonsiCredit\Domain.KonsiCredit.csproj", "{77D761E5-A609-47A5-806C-14BF53DAE71A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{8C8CBC8A-732B-4FAE-9465-44969F52DB2B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrossCutting", "CrossCutting", "{F1CACA39-D327-4C03-8C47-542A0B64BF36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra.CrossCutting.KonsiCredit", "Infra\CrossCutting\Infra.CrossCutting.KonsiCredit\Infra.CrossCutting.KonsiCredit.csproj", "{F7193F9C-97B2-4CF2-BBDA-A306C715AE9A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{0006378A-0A4D-4A3F-833C-171855B59444}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra.Data.KonsiCredit", "Infra\Data\Infra.Data.KonsiCredit\Infra.Data.KonsiCredit.csproj", "{1589F8E7-DA11-4D97-BCB5-B40D9DC1A28E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consumer.KonsiCredit", "Presentation\Consumer.KonsiCredit\Consumer.KonsiCredit.csproj", "{11399DD5-0BA4-4FFF-ABFF-FBE44CC8CA31}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{30C789EB-8793-4042-9759-FB3F31ED6EB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30C789EB-8793-4042-9759-FB3F31ED6EB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30C789EB-8793-4042-9759-FB3F31ED6EB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30C789EB-8793-4042-9759-FB3F31ED6EB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F81E15AE-9417-4871-8DFC-DB5E23ACE44F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F81E15AE-9417-4871-8DFC-DB5E23ACE44F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F81E15AE-9417-4871-8DFC-DB5E23ACE44F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F81E15AE-9417-4871-8DFC-DB5E23ACE44F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04560380-C3B8-4A70-9DB3-EF80CE139292}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04560380-C3B8-4A70-9DB3-EF80CE139292}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04560380-C3B8-4A70-9DB3-EF80CE139292}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04560380-C3B8-4A70-9DB3-EF80CE139292}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77D761E5-A609-47A5-806C-14BF53DAE71A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77D761E5-A609-47A5-806C-14BF53DAE71A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77D761E5-A609-47A5-806C-14BF53DAE71A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77D761E5-A609-47A5-806C-14BF53DAE71A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7193F9C-97B2-4CF2-BBDA-A306C715AE9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7193F9C-97B2-4CF2-BBDA-A306C715AE9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7193F9C-97B2-4CF2-BBDA-A306C715AE9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7193F9C-97B2-4CF2-BBDA-A306C715AE9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1589F8E7-DA11-4D97-BCB5-B40D9DC1A28E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1589F8E7-DA11-4D97-BCB5-B40D9DC1A28E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1589F8E7-DA11-4D97-BCB5-B40D9DC1A28E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1589F8E7-DA11-4D97-BCB5-B40D9DC1A28E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11399DD5-0BA4-4FFF-ABFF-FBE44CC8CA31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11399DD5-0BA4-4FFF-ABFF-FBE44CC8CA31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11399DD5-0BA4-4FFF-ABFF-FBE44CC8CA31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11399DD5-0BA4-4FFF-ABFF-FBE44CC8CA31}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{30C789EB-8793-4042-9759-FB3F31ED6EB5} = {3DC4A82A-AA56-4C2E-A23B-D6D4CA679621}
+		{F81E15AE-9417-4871-8DFC-DB5E23ACE44F} = {8C90A9CF-3E60-4FE9-B396-E423B19E0501}
+		{04560380-C3B8-4A70-9DB3-EF80CE139292} = {8F8B42D2-1D92-4E9E-BF4D-EACCEAAD5673}
+		{77D761E5-A609-47A5-806C-14BF53DAE71A} = {A13DD378-9D7C-4C1D-B835-687B28E9B5B2}
+		{F1CACA39-D327-4C03-8C47-542A0B64BF36} = {8C8CBC8A-732B-4FAE-9465-44969F52DB2B}
+		{F7193F9C-97B2-4CF2-BBDA-A306C715AE9A} = {F1CACA39-D327-4C03-8C47-542A0B64BF36}
+		{0006378A-0A4D-4A3F-833C-171855B59444} = {8C8CBC8A-732B-4FAE-9465-44969F52DB2B}
+		{1589F8E7-DA11-4D97-BCB5-B40D9DC1A28E} = {0006378A-0A4D-4A3F-833C-171855B59444}
+		{11399DD5-0BA4-4FFF-ABFF-FBE44CC8CA31} = {8C90A9CF-3E60-4FE9-B396-E423B19E0501}
+	EndGlobalSection
+EndGlobal
