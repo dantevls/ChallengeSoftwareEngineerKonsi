@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using Application.KonsiCredit.UserBenefitsViewModels;
+using Infra.Data.KonsiCredit.CachingRepository;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using Newtonsoft.Json;
 using Services.KonsiCredit.AuthAppService;
-using Services.KonsiCredit.CachingAppService;
 using Services.KonsiCredit.ElasticSearchAppService;
 using Services.KonsiCredit.HttpClientHandler;
 using Xunit;
@@ -14,7 +14,7 @@ namespace BenefitsAppService.Test
     public class BenefitsAppServiceTest
     {
         private readonly Mock<IConfiguration> _configurationMock = new Mock<IConfiguration>();
-        private readonly Mock<ICachingAppService> _cacheMock = new Mock<ICachingAppService>();
+        private readonly Mock<ICachingRepository> _cacheMock = new Mock<ICachingRepository>();
         private readonly Mock<IElasticSearchAppService> _elasticSearchMock = new Mock<IElasticSearchAppService>();
         private readonly Mock<IAuthAppService> _authAppServiceMock = new Mock<IAuthAppService>();
         private readonly Mock<IHttpClientHandler> _httpClientHandler = new Mock<IHttpClientHandler>();

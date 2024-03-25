@@ -35,3 +35,5 @@ Parar e Remover os Contêineres:
 Para parar e remover os contêineres Docker gerenciados pelo Docker Compose, execute o seguinte comando na raiz do projeto:
 
 docker-compose down
+
+Observação: É para acompanhar as métricas do elasticSearch é possível acessar a interface visual do Kibana acessando: http://localhost:5601/app

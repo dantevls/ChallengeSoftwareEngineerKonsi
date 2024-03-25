@@ -4,23 +4,26 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using Services.KonsiCredit.BenefitsAppService;
+using Services.KonsiCredit.Factory;
 
 namespace Services.KonsiCredit.QueueAppService;
 
 public class ProducerQueueAppService : IProducerQueueAppService
 {
     private readonly IConfiguration _configuration;
-    private readonly IModel _channel;
     private readonly IBenefitsAppService _benefitsAppService;
+    private readonly IRabbitMqChannelFactory _channelFactory;
+    private readonly IModel _channel;
     private string? CpfQueue => _configuration.GetSection("CpfQueue").Value;
 
     public ProducerQueueAppService(IConfiguration configuration, 
-        IBenefitsAppService benefitsAppService)
+        IBenefitsAppService benefitsAppService, IRabbitMqChannelFactory channelFactory)
     {
         _configuration = configuration;
         _benefitsAppService = benefitsAppService;
-        _channel = CreateRabbitMqChannel();
-        _channel.QueueDeclare(queue: CpfQueue,
+        _channelFactory = channelFactory;
+        _channel = _channelFactory.CreateChannel();
+        _channel?.QueueDeclare(queue: CpfQueue,
             durable: false,
             exclusive: false,
             autoDelete: false,
@@ -46,22 +49,23 @@ public class ProducerQueueAppService : IProducerQueueAppService
             var user = await _benefitsAppService.GetUserBenefits(cpf);
             if (user == new UserBenefitsViewModel()) return;
             var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(user.data));
-            _channel.BasicPublish(exchange: string.Empty,
+            _channel?.BasicPublish(exchange: string.Empty,
                 routingKey: "CpfQueue",
                 basicProperties: null,
                 body: body);
         }
 
-        _channel.QueueDeclare(queue: "CpfQueue",
+        _channel?.QueueDeclare(queue: "CpfQueue",
             durable: false,
             exclusive: false,
             autoDelete: false,
             arguments: null);
     }
 
-        private IModel CreateRabbitMqChannel()
+        private IModel? CreateRabbitMqChannel()
         {
             var credentials = _configuration.GetSection("RabbitMQ:Credentials").GetChildren().ToList();
+            if (credentials?.FirstOrDefault() == null) return null;
             var factory = new ConnectionFactory
             {
                 HostName = credentials?.FirstOrDefault(x => x.Key == "Host")?.Value?.ToString(),

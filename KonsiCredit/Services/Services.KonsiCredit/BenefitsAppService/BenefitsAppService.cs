@@ -1,12 +1,10 @@
 ﻿using System.Net;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Text.RegularExpressions;
 using Application.KonsiCredit.UserBenefitsViewModels;
+using Infra.Data.KonsiCredit.CachingRepository;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Services.KonsiCredit.AuthAppService;
-using Services.KonsiCredit.CachingAppService;
 using Services.KonsiCredit.ElasticSearchAppService;
 using Services.KonsiCredit.HttpClientHandler;
 
@@ -15,12 +13,12 @@ namespace Services.KonsiCredit.BenefitsAppService;
 public class BenefitsAppService : IBenefitsAppService
 {
     private readonly IConfiguration _configuration;
-    private readonly ICachingAppService _cache;
+    private readonly ICachingRepository _cache;
     private readonly IElasticSearchAppService _elasticSearch;
     private readonly IAuthAppService _authAppService;
     private readonly IHttpClientHandler _httpClientHandler;
 
-    public BenefitsAppService(IConfiguration configuration, ICachingAppService cache, 
+    public BenefitsAppService(IConfiguration configuration, ICachingRepository cache, 
         IElasticSearchAppService elasticSearch, IAuthAppService authAppService, IHttpClientHandler httpClientHandler)
     {
         _configuration = configuration;

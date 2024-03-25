@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Application\Application.KonsiCredit\Application.KonsiCredit.csproj" />
     <ProjectReference Include="..\..\Domain\Domain.KonsiCredit\Domain.KonsiCredit.csproj" />
+    <ProjectReference Include="..\..\Infra\Data\Infra.Data.KonsiCredit\Infra.Data.KonsiCredit.csproj" />
   </ItemGroup>
 
 </Project>

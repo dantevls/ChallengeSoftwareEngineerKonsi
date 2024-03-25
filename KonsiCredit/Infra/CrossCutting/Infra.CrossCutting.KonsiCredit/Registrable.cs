@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Services.KonsiCredit.AuthAppService;
 using Services.KonsiCredit.BenefitsAppService;
+using Services.KonsiCredit.Factory;
 using Services.KonsiCredit.HttpClientHandler;
 using Services.KonsiCredit.QueueAppService;
 using HttpClientHandler = Services.KonsiCredit.HttpClientHandler.HttpClientHandler;
@@ -15,5 +16,6 @@ public class Registrable
         serviceCollection.AddScoped<IAuthAppService, AuthAppService>();  
         serviceCollection.AddScoped<IBenefitsAppService, BenefitsAppService>();
         serviceCollection.AddScoped<IProducerQueueAppService, ProducerQueueAppService>();
+        serviceCollection.AddScoped<IRabbitMqChannelFactory, RabbitMqChannelFactory>();
     }
 }

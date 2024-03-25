@@ -1,14 +1,14 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 
-namespace Services.KonsiCredit.CachingAppService;
+namespace Infra.Data.KonsiCredit.CachingRepository;
 
-public class CachingAppService : ICachingAppService
+public class CachingRepository : ICachingRepository
 {
     private readonly IDistributedCache _distributedCache;
     
     private readonly DistributedCacheEntryOptions _options;
     
-    public CachingAppService(IDistributedCache distributedCache)
+    public CachingRepository(IDistributedCache distributedCache)
     {
         _distributedCache = distributedCache;
         _options = new DistributedCacheEntryOptions

@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Services\Services.KonsiCredit\Services.KonsiCredit.csproj" />
+    <ProjectReference Include="..\..\Data\Infra.Data.KonsiCredit\Infra.Data.KonsiCredit.csproj" />
   </ItemGroup>
 
 </Project>
