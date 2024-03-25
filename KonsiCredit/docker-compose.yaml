@@ -40,11 +40,22 @@ services:
       - "9200:9200"  # Elasticsearch HTTP API port
       - "9300:9300"  # Elasticsearch TCP transport port
 
-  consumerkonsicredit:
-    build: ./
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.16.3
+    container_name: kibana-server
     ports:
-      - "5033:5015"
-    command: ["./Consumer.KonsiCredit"]
+      - "5601:5601"
+    networks:
+      - my-network
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+
+  consumerkonsicredit:
+    build:
+      context: .
+      dockerfile: /Presentation/Consumer.KonsiCredit/Dockerfile
+    ports:
+      - "5033:5033"
     networks:
       - my-network
     depends_on:
@@ -54,10 +65,11 @@ services:
       - rabbitmq
 
   presentationkonsicredit:
-    build: ./
+    build:
+      context: .       
+      dockerfile: /Presentation/Presentation.KonsiCredit/Dockerfile
     ports:
-      - "5030:5015"
-    command: ["./Presentation.KonsiCredit"]
+      - "5030:5030"
     networks:
       - my-network
     depends_on:

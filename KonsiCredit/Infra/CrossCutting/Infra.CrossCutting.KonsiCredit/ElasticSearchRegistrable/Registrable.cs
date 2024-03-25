@@ -1,6 +1,5 @@
-﻿using Application.KonsiCredit.UserBenefitsViewModels;
-using Elastic.Clients.Elasticsearch;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Nest;
 using Services.KonsiCredit.ElasticSearchAppService;
 
 
@@ -10,9 +9,10 @@ public class Registrable
 {
     public static void RegisterServices(IServiceCollection serviceCollection)
     {
-        var settings = new ElasticsearchClientSettings(new Uri("https://localhost:9200")).DefaultIndex("cpf");
-        var client = new ElasticsearchClient(settings);
+        var settings = new ConnectionSettings(new Uri("http://elasticsearch:9200/")).DefaultIndex("cpf");
+        var client = new ElasticClient(settings);
         serviceCollection.AddSingleton(client);
-        serviceCollection.AddScoped<IElasticSearchAppService<Data>, ElasticSearchAppService<Data>>();
+        serviceCollection.AddScoped<IElasticSearchAppService, ElasticSearchAppService>();
+
     }
 }

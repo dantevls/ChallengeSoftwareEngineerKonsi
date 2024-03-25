@@ -1,8 +1,10 @@
 ﻿using System.Text;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using Services.KonsiCredit.AuthAppService;
 using Services.KonsiCredit.BenefitsAppService;
+using static System.Console;
 
 namespace Services.KonsiCredit.QueueAppService;
 
@@ -22,10 +24,13 @@ public class ProducerCpfQueue
     {
         var userRoot = _configuration.GetSection("UserRoot").Value;
         var passRoot = _configuration.GetSection("PassRoot").Value;
+
         if (string.IsNullOrEmpty(userRoot) || string.IsNullOrEmpty(passRoot)) return;
         
         var token = _auth.GetUserToken(userRoot, passRoot).Result;
-
+        
+        if (token == null) return;
+        
         var cpfList = new List<string>
         {
             "343.228.350-40",
@@ -38,6 +43,12 @@ public class ProducerCpfQueue
         foreach (var cpf in cpfList )
         {
             var user = await _benefitsAppService.GetUserBenefits(cpf, token);
+            if (user == null) return;
+            var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(user.data));
+            channel.BasicPublish(exchange: string.Empty,
+                routingKey: "CpfQueue",
+                basicProperties: null,
+                body: body);
         }
 
         channel.QueueDeclare(queue: "CpfQueue",
@@ -45,15 +56,6 @@ public class ProducerCpfQueue
             exclusive: false,
             autoDelete: false,
             arguments: null);
-
-        foreach (var body in cpfList.Select(cpf => Encoding.UTF8.GetBytes(cpf)))
-        {
-            channel.BasicPublish(exchange: string.Empty,
-                routingKey: "CpfQueue",
-                basicProperties: null,
-                body: body);
-        }
-        
     }
     
 }

@@ -1,7 +1,9 @@
-﻿namespace Services.KonsiCredit.ElasticSearchAppService;
+﻿using Application.KonsiCredit.UserBenefitsViewModels;
 
-public interface IElasticSearchAppService<T>
+namespace Services.KonsiCredit.ElasticSearchAppService;
+
+public interface IElasticSearchAppService
 {
-    public Task<string> CreateDocumentAsync<T>(T document) where T : class;
-    public Task<T> GetDocumentAsync(int id);
+    public Task<string> CreateDocumentAsync(Data document);
+    public Task<Data> GetDocumentAsync(int id);
 }

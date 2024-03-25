@@ -10,13 +10,5 @@ public class Registrable
     {
         serviceCollection.AddScoped<IAuthAppService, AuthAppService>();  
         serviceCollection.AddScoped<IBenefitsAppService, BenefitsAppService>();
-        //     serviceCollection.AddSingleton(sg =>
-    //         {
-    //             var service = sg.GetService<IRabbitMQAppService>();
-    //             var factory = 
-    //                 
-    //         }
-    //        
-    //         );
-     }
+    }
 }

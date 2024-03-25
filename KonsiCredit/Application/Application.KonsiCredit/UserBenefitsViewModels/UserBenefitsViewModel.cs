@@ -5,29 +5,41 @@ namespace Application.KonsiCredit.UserBenefitsViewModels;
 
 public class UserBenefitsViewModel
 {
-    [JsonPropertyName("success")]
-    public bool Success { get; set; }
+    /// <summary>
+    /// Status of return
+    /// </summary>
+    public bool success { get; set; }
     
-    [JsonPropertyName("data")]
-    public Data Data { get; set; }
+    /// <summary>
+    /// Object with benefits values
+    /// </summary>
+    public Data data { get; set; }
 
 }
 
 public class Data
 {
-    [JsonPropertyName("cpf")]
-    public string Cpf { get; set; }
+    /// <summary>
+    /// Identifier
+    /// </summary>
+    public string cpf { get; set; }
     
-    [DisplayName("beneficios")]
-    public Benefits[] Beneficios { get; set; } 
+    /// <summary>
+    /// Benefits of identifier user
+    /// </summary>
+    public Benefits[] beneficios { get; set; } 
 }
 
 public class Benefits
 {
-    [DisplayName("numero_beneficio")]
-    public string BenefitNumber { get; set; }
+    /// <summary>
+    /// Benfetis number
+    /// </summary>
+    public string numero_beneficio { get; set; }
     
-    [DisplayName("codigo_tipo_beneficio")]
-    public int CodeBenefitType { get; set; }
+    /// <summary>
+    /// Benefits code
+    /// </summary>
+    public int codigo_tipo_beneficio { get; set; }
     
 }

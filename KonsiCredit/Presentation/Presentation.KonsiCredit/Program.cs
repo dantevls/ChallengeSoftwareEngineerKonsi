@@ -1,6 +1,3 @@
-using Infra.CrossCutting.KonsiCredit;
-using Infra.CrossCutting.KonsiCredit.CachingRegistrable;
-using Services.KonsiCredit.QueueAppService;
 using Registrable = Infra.CrossCutting.KonsiCredit.CachingRegistrable.Registrable;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,9 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddAuthentication("MyAuthenticationScheme")
     .AddCookie("MyAuthenticationScheme", options =>
-    {
-        options.Cookie.Name = "MyCookieName";
-    });
+    { });
 
 builder.Services.AddAuthorization();
 
@@ -19,17 +14,15 @@ builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+Infra.CrossCutting.KonsiCredit.ElasticSearchRegistrable.Registrable.RegisterServices(builder.Services);
 Infra.CrossCutting.KonsiCredit.Registrable.RegisterServices(builder.Services);
 Registrable.RegisterServices(builder.Services);
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 

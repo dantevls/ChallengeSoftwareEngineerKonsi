@@ -12,7 +12,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHostedService<RabbitConsumer>();
+
 Registrable.RegisterServices(builder.Services);
+Infra.CrossCutting.KonsiCredit.ElasticSearchRegistrable.Registrable.RegisterServices(builder.Services);
 Infra.CrossCutting.KonsiCredit.Registrable.RegisterServices(builder.Services);
 
 var app = builder.Build();

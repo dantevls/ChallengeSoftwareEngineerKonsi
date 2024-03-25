@@ -23,19 +23,20 @@ public class AuthAppService : IAuthAppService
         var url = GetExternalInssUri + "/token";
         var body = new UserViewModel
         {
-            Username = username,
-            Password = password
+            username = username,
+            password = password
         };
 
         try
         {
-            var content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
-            
-            var response = await client.PostAsync(url, content);
-            
+            var content = JsonConvert.SerializeObject(body);
+            var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(url, httpContent, CancellationToken.None);
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                return await response.Content.ReadAsStringAsync();
+                var result = await response.Content.ReadAsStringAsync();
+                var tokenModel = JsonConvert.DeserializeObject<ResponseTokenViewModel>(result);
+                return tokenModel?.data?.token;
             }
 
             return null;

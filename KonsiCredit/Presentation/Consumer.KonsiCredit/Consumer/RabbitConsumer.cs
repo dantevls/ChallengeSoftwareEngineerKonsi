@@ -39,16 +39,14 @@ public class RabbitConsumer : BackgroundService
             autoDelete: false,
             arguments: null);
         var producer = new ProducerCpfQueue(_configuration, _authAppService, _benefitsAppService);
-        producer.EnqueueCpf(_channel);
+        producer.EnqueueCpf(_channel).Wait();
     }
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        Console.WriteLine("Bateu no consumer");
         var consumer = new EventingBasicConsumer(_channel);
         consumer.Received += async (model, ea) =>
         {
             var body = ea.Body.ToArray();
-            Console.WriteLine(Encoding.UTF8.GetString(body));
             var message = Encoding.UTF8.GetString(body);
             _channel.BasicAck(ea.DeliveryTag, false);
             var document = await _cache.GetDocumentAsync(message); 

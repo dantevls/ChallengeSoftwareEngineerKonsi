@@ -25,9 +25,9 @@ public class AuthController : ControllerBase
     [AllowAnonymous]
     [Route("/userToken")]
     [HttpGet]
-    public async Task<IActionResult> GetUserToken(UserViewModel userViewModel)
+    public async Task<IActionResult> GetUserToken([FromBody] UserViewModel userViewModel)
     {
-        var response = await _authAppService.GetUserToken(userViewModel.Username, userViewModel.Password);
+        var response = await _authAppService.GetUserToken(userViewModel.username, userViewModel.password);
         return Ok(response);
     }
     
