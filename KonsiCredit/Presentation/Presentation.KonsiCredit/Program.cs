@@ -15,8 +15,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 Registrable.RegisterServices(builder.Services);
-Infra.CrossCutting.KonsiCredit.ElasticSearchRegistrable.Registrable.RegisterServices(builder.Services);
-Infra.CrossCutting.KonsiCredit.CachingRegistrable.Registrable.RegisterServices(builder.Services);
+Infra.CrossCutting.KonsiCredit.ElasticSearchRegistrable.Registrable.RegisterServices(builder.Services, builder.Configuration);
+Infra.CrossCutting.KonsiCredit.CachingRegistrable.Registrable.RegisterServices(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 

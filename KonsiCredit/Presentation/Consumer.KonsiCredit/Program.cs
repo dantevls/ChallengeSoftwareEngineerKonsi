@@ -12,8 +12,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHostedService<UserCpfConsumer>();
 
 Registrable.RegisterServices(builder.Services);
-Infra.CrossCutting.ConsumerKonsiCredit.CachingRegistrable.Registrable.RegisterServices(builder.Services);
-Infra.CrossCutting.ConsumerKonsiCredit.ElasticSearchRegistrable.Registrable.RegisterServices(builder.Services);
+Infra.CrossCutting.ConsumerKonsiCredit.CachingRegistrable.Registrable.RegisterServices(builder.Services, builder.Configuration);
+Infra.CrossCutting.ConsumerKonsiCredit.ElasticSearchRegistrable.Registrable.RegisterServices(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 
