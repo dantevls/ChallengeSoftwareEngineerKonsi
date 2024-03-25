@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.RegularExpressions;
 using Application.KonsiCredit.UserBenefitsViewModels;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +8,7 @@ using Newtonsoft.Json;
 using Services.KonsiCredit.AuthAppService;
 using Services.KonsiCredit.CachingAppService;
 using Services.KonsiCredit.ElasticSearchAppService;
+using Services.KonsiCredit.HttpClientHandler;
 
 namespace Services.KonsiCredit.BenefitsAppService;
 
@@ -16,40 +18,43 @@ public class BenefitsAppService : IBenefitsAppService
     private readonly ICachingAppService _cache;
     private readonly IElasticSearchAppService _elasticSearch;
     private readonly IAuthAppService _authAppService;
-    private string? ExternalInssUri => _configuration.GetSection("ExternalInssApiUri").Value;
+    private readonly IHttpClientHandler _httpClientHandler;
 
     public BenefitsAppService(IConfiguration configuration, ICachingAppService cache, 
-        IElasticSearchAppService elasticSearch, IAuthAppService authAppService)
+        IElasticSearchAppService elasticSearch, IAuthAppService authAppService, IHttpClientHandler httpClientHandler)
     {
         _configuration = configuration;
         _cache = cache;
         _elasticSearch = elasticSearch;
         _authAppService = authAppService;
+        _httpClientHandler = httpClientHandler;
     }
     public async Task<UserBenefitsViewModel> GetUserBenefits(string cpf)
     {
-        if (string.IsNullOrEmpty(cpf)) return new UserBenefitsViewModel();
+        var formattedCpf = RemoverCaracteresEspeciais(cpf);
+        if (string.IsNullOrEmpty(formattedCpf)) return new UserBenefitsViewModel();
         
-        var document = await _cache.GetDocumentAsync(RemoverCaracteresEspeciais(cpf));
+        var document = await _cache.GetDocumentAsync(RemoverCaracteresEspeciais(formattedCpf));
 
         if (string.IsNullOrWhiteSpace(document))
         {
-            using HttpClient client = new HttpClient();
-            var uri = $"{ExternalInssUri}/inss/consulta-beneficios?cpf={cpf}";
+            var externalInssUri = _configuration.GetSection("ExternalInssApiUri").Value;
+            var uri = $"{externalInssUri}/inss/consulta-beneficios?cpf={cpf}";
             try
             {
                 var userRoot = _configuration.GetSection("UserRoot").Value;
                 var passRoot = _configuration.GetSection("PassRoot").Value;
                 if (userRoot == null || passRoot == null) return new UserBenefitsViewModel();
                 var token = await _authAppService.GetUserToken(userRoot, passRoot);
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var response = await client.GetAsync(uri);
+
+                var request = new HttpRequestMessage(HttpMethod.Get, uri);
+                var response = await _httpClientHandler.GetAsync(request, token ?? null);
             
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     var userBenefitsData = await response.Content.ReadAsStringAsync();
                     var viewModel = JsonConvert.DeserializeObject<UserBenefitsViewModel>(userBenefitsData);
-                    if (viewModel != null)
+                    if (viewModel?.data.cpf != null)
                     {
                         await _elasticSearch.CreateDocumentAsync(viewModel.data);
                         await _cache.SetDocumentAsync(viewModel.data.cpf, userBenefitsData);
@@ -63,9 +68,13 @@ public class BenefitsAppService : IBenefitsAppService
                 throw new Exception(e.Message);
             }
         }
-
+        
         var userBenefitsModel = JsonConvert.DeserializeObject<UserBenefitsViewModel>(document);
-        return userBenefitsModel ?? new UserBenefitsViewModel();
+        
+        if (userBenefitsModel == null) return new UserBenefitsViewModel();
+        await _elasticSearch.CreateDocumentAsync(userBenefitsModel.data);
+        return userBenefitsModel;
+
     }
     
     
@@ -73,6 +82,6 @@ public class BenefitsAppService : IBenefitsAppService
     {
         var pattern = "[^0-9]";
         var result = Regex.Replace(input, pattern, "");
-        return result;
+        return result.Length != 11 ? string.Empty : result;
     }
 }

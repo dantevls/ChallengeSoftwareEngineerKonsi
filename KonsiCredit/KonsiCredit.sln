@@ -35,6 +35,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KonsiCreditApp", "KonsiCred
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra.CrossCutting.ConsumerKonsiCredit", "Infra\CrossCutting\Infra.CrossCutting.ConsumerKonsiCredit\Infra.CrossCutting.ConsumerKonsiCredit.csproj", "{398E3D23-F03E-4C70-8D82-B4852A6F2625}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{C248B2B1-66B0-4904-81CE-E9153728D911}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnityTests", "UnityTests", "{A5939284-2071-46E8-A1F1-335E394BAD84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenefitsAppService.Test", "Test\UnityTests\BenefitsAppService.Test\BenefitsAppService.Test.csproj", "{F08A7CF4-2562-4F0A-AA08-EF668B20A7C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthAppService.Test", "Test\UnityTests\AuthAppService.Test\AuthAppService.Test.csproj", "{20949626-4D1D-42D1-9DCF-2DFA8B4ACAB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +92,10 @@ Global
 		{398E3D23-F03E-4C70-8D82-B4852A6F2625}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{398E3D23-F03E-4C70-8D82-B4852A6F2625}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{398E3D23-F03E-4C70-8D82-B4852A6F2625}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20949626-4D1D-42D1-9DCF-2DFA8B4ACAB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20949626-4D1D-42D1-9DCF-2DFA8B4ACAB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20949626-4D1D-42D1-9DCF-2DFA8B4ACAB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20949626-4D1D-42D1-9DCF-2DFA8B4ACAB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{30C789EB-8793-4042-9759-FB3F31ED6EB5} = {3DC4A82A-AA56-4C2E-A23B-D6D4CA679621}
@@ -98,5 +110,6 @@ Global
 		{A5939284-2071-46E8-A1F1-335E394BAD84} = {C248B2B1-66B0-4904-81CE-E9153728D911}
 		{F08A7CF4-2562-4F0A-AA08-EF668B20A7C5} = {A5939284-2071-46E8-A1F1-335E394BAD84}
 		{398E3D23-F03E-4C70-8D82-B4852A6F2625} = {F1CACA39-D327-4C03-8C47-542A0B64BF36}
+		{20949626-4D1D-42D1-9DCF-2DFA8B4ACAB0} = {A5939284-2071-46E8-A1F1-335E394BAD84}
 	EndGlobalSection
 EndGlobal

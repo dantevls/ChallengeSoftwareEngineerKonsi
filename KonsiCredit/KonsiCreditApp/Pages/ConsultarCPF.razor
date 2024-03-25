@@ -67,10 +67,11 @@
         @if (resultado.success)
         {
             <div>
-                <h4>Dados do CPF</h4>
+                <p> </p>
+                <h4>Dados do Beneficiário:</h4>
                 <p><strong>CPF:</strong> @resultado.data.cpf</p>
-                
-                <h4>Benefícios</h4>
+
+                <h4>Benefícios:</h4>
                 @if (resultado.data?.beneficios?.Any() == true)
                 {
                     <ul>
@@ -78,7 +79,7 @@
                         {
                             <li>
                                 <strong>Número do Benefício:</strong> @beneficio.numero_beneficio
-                                <br />
+                                <br/>
                                 <strong>Código do Tipo de Benefício:</strong> @beneficio.codigo_tipo_beneficio
                             </li>
                         }

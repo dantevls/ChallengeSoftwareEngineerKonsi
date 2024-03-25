@@ -9,7 +9,7 @@ public class Registrable
 {
     public static void RegisterServices(IServiceCollection serviceCollection)
     {
-        var settings = new ConnectionSettings(new Uri("http://elasticsearch:9200/")).DefaultIndex("cpf");
+        var settings = new ConnectionSettings(new Uri("http://elasticsearch-server:9200/")).DefaultIndex("cpf");
         var client = new ElasticClient(settings);
         serviceCollection.AddSingleton(client);
         serviceCollection.AddScoped<IElasticSearchAppService, ElasticSearchAppService>();

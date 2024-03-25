@@ -5,6 +5,14 @@ namespace Application.KonsiCredit.UserBenefitsViewModels;
 
 public class UserBenefitsViewModel
 {
+    public UserBenefitsViewModel()
+    {
+        
+    }
+    public UserBenefitsViewModel(Data data)
+    {
+        this.data = data;
+    }
     /// <summary>
     /// Status of return
     /// </summary>
@@ -19,6 +27,11 @@ public class UserBenefitsViewModel
 
 public class Data
 {
+    public Data(string cpf, Benefits[] beneficios)
+    {
+        this.cpf = cpf;
+        this.beneficios = beneficios;
+    }
     /// <summary>
     /// Identifier
     /// </summary>
@@ -32,6 +45,12 @@ public class Data
 
 public class Benefits
 {
+
+    public Benefits(string number, int code)
+    {
+        numero_beneficio = number;
+        codigo_tipo_beneficio = code;
+    }
     /// <summary>
     /// Benfetis number
     /// </summary>
