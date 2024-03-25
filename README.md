@@ -5,7 +5,10 @@ Esta API foi desenvolvida para buscar e retornar a matrícula de um servidor em 
 Requisitos
 Antes de rodar a API, certifique-se de ter instalado o seguinte:
 
-.NET 6 SDK
+.NET 6
+
+SDK
+
 Docker
 
 Como rodar
