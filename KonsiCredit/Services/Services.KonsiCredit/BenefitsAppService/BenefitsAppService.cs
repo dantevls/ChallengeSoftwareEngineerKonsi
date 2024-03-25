@@ -29,6 +29,8 @@ public class BenefitsAppService : IBenefitsAppService
     }
     public async Task<UserBenefitsViewModel> GetUserBenefits(string cpf)
     {
+        if (string.IsNullOrEmpty(cpf)) return new UserBenefitsViewModel();
+        
         var document = await _cache.GetDocumentAsync(RemoverCaracteresEspeciais(cpf));
 
         if (string.IsNullOrWhiteSpace(document))

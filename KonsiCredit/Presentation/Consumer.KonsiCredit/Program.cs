@@ -1,6 +1,5 @@
 using Consumer.KonsiCredit.Consumer;
-using Infra.CrossCutting.KonsiCredit;
-using Infra.CrossCutting.KonsiCredit.CachingRegistrable;
+using Services.KonsiCredit.QueueAppService;
 using Registrable = Infra.CrossCutting.KonsiCredit.CachingRegistrable.Registrable;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,13 +10,16 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddHostedService<RabbitConsumer>();
+builder.Services.AddHostedService<UserCpfConsumer>();
 
 Registrable.RegisterServices(builder.Services);
 Infra.CrossCutting.KonsiCredit.ElasticSearchRegistrable.Registrable.RegisterServices(builder.Services);
 Infra.CrossCutting.KonsiCredit.Registrable.RegisterServices(builder.Services);
 
 var app = builder.Build();
+
+var queueService = app.Services.GetService<IProducerQueueAppService>();
+queueService?.EnqueueCpf();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

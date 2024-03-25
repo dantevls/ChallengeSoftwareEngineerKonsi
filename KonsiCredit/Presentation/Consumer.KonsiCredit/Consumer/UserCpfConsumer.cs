@@ -4,42 +4,28 @@ using RabbitMQ.Client.Events;
 using Services.KonsiCredit.AuthAppService;
 using Services.KonsiCredit.BenefitsAppService;
 using Services.KonsiCredit.CachingAppService;
-using Services.KonsiCredit.QueueAppService;
 
 namespace Consumer.KonsiCredit.Consumer;
 
-public class RabbitConsumer : BackgroundService
+public class UserCpfConsumer : BackgroundService
 {
     private readonly IConfiguration _configuration;
     private readonly ICachingAppService _cache;
     private readonly IModel _channel;
-    private readonly IAuthAppService _authAppService;
     private readonly IBenefitsAppService _benefitsAppService;
     private string? CpfQueue => _configuration.GetSection("CpfQueue").Value;
     
-    public RabbitConsumer(IConfiguration configuration, ICachingAppService cachingAppService, IAuthAppService authAppService, IBenefitsAppService benefitsAppService)
+    public UserCpfConsumer(IConfiguration configuration, ICachingAppService cachingAppService, IAuthAppService authAppService, IBenefitsAppService benefitsAppService)
     {
         _configuration = configuration;
         _cache = cachingAppService;
-        _authAppService = authAppService;
         _benefitsAppService = benefitsAppService;
-
-        var credentials = _configuration.GetSection("RabbitMQ:Credentials").GetChildren().ToList();
-        var factory = new ConnectionFactory
-        {
-            HostName = credentials?.FirstOrDefault(x => x.Key == "Host")?.Value?.ToString(),
-            UserName = credentials?.FirstOrDefault(x => x.Key == "Username")?.Value?.ToString(),
-            Password = credentials?.FirstOrDefault(x => x.Key == "Password")?.Value?.ToString(),
-        };
-        var connection = factory.CreateConnection();
-        _channel = connection.CreateModel();
+        _channel = CreateRabbitMqChannel();
         _channel.QueueDeclare(queue: CpfQueue,
             durable: false,
             exclusive: false,
             autoDelete: false,
             arguments: null);
-        var producer = new ProducerCpfQueue(_benefitsAppService);
-        producer.EnqueueCpf(_channel).Wait();
     }
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -60,5 +46,19 @@ public class RabbitConsumer : BackgroundService
              consumer: consumer);
         
         return Task.CompletedTask;
+    }
+
+    private IModel CreateRabbitMqChannel()
+    {
+        var credentials = _configuration.GetSection("RabbitMQ:Credentials").GetChildren().ToList();
+        var factory = new ConnectionFactory
+        {
+            HostName = credentials?.FirstOrDefault(x => x.Key == "Host")?.Value?.ToString(),
+            UserName = credentials?.FirstOrDefault(x => x.Key == "Username")?.Value?.ToString(),
+            Password = credentials?.FirstOrDefault(x => x.Key == "Password")?.Value?.ToString(),
+        };
+        var connection = factory.CreateConnection();
+        var channel = connection.CreateModel();
+        return channel;
     }
 }
