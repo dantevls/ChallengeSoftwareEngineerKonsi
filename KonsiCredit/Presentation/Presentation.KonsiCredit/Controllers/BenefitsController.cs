@@ -25,8 +25,7 @@ public class BenefitsController: ControllerBase
     [Route("consulta-beneficios")]
     public async Task<IActionResult> GetByCpf([FromQuery] string cpf)
     {
-        var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-        var response = await _benefitsAppService.GetUserBenefits(cpf, token);
+        var response = await _benefitsAppService.GetUserBenefits(cpf);
         return Ok(response);
     }
 

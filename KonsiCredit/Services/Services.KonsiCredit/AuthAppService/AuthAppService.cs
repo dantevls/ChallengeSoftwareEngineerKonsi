@@ -38,9 +38,7 @@ public class AuthAppService : IAuthAppService
                 var tokenModel = JsonConvert.DeserializeObject<ResponseTokenViewModel>(result);
                 return tokenModel?.data?.token;
             }
-
             return null;
-
         }
         catch (Exception e)
         {

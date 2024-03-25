@@ -38,7 +38,7 @@ public class RabbitConsumer : BackgroundService
             exclusive: false,
             autoDelete: false,
             arguments: null);
-        var producer = new ProducerCpfQueue(_configuration, _authAppService, _benefitsAppService);
+        var producer = new ProducerCpfQueue(_benefitsAppService);
         producer.EnqueueCpf(_channel).Wait();
     }
     protected override Task ExecuteAsync(CancellationToken stoppingToken)

@@ -4,5 +4,5 @@ namespace Services.KonsiCredit.BenefitsAppService;
 
 public interface IBenefitsAppService
 {
-    Task<UserBenefitsViewModel> GetUserBenefits(string cpf, string token);
+    Task<UserBenefitsViewModel> GetUserBenefits(string cpf);
 }

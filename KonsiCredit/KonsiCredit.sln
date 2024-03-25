@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra.Data.KonsiCredit", "I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consumer.KonsiCredit", "Presentation\Consumer.KonsiCredit\Consumer.KonsiCredit.csproj", "{11399DD5-0BA4-4FFF-ABFF-FBE44CC8CA31}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KonsiCreditApp", "KonsiCreditApp\KonsiCreditApp.csproj", "{2534FDF9-F155-4E9B-A832-B9C9E69D4365}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{11399DD5-0BA4-4FFF-ABFF-FBE44CC8CA31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11399DD5-0BA4-4FFF-ABFF-FBE44CC8CA31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11399DD5-0BA4-4FFF-ABFF-FBE44CC8CA31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2534FDF9-F155-4E9B-A832-B9C9E69D4365}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2534FDF9-F155-4E9B-A832-B9C9E69D4365}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2534FDF9-F155-4E9B-A832-B9C9E69D4365}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2534FDF9-F155-4E9B-A832-B9C9E69D4365}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{30C789EB-8793-4042-9759-FB3F31ED6EB5} = {3DC4A82A-AA56-4C2E-A23B-D6D4CA679621}

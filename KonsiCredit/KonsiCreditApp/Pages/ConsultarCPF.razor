@@ -1,0 +1,143 @@
+﻿@page "/consultarCPF"
+@using Newtonsoft.Json
+
+<style>
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h3, h4 {
+        color: #333;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+
+    strong {
+        font-weight: bold;
+    }
+
+    .error-message {
+        color: red;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="container">
+    <h3>Consultar CPF</h3>
+
+    <input @bind="cpf" placeholder="Digite o CPF" />
+    <button @onclick="ConsultarCpf">Consultar</button>
+
+    @if (resultado != null)
+    {
+        @if (resultado.success)
+        {
+            <div>
+                <h4>Dados do CPF</h4>
+                <p><strong>CPF:</strong> @resultado.data.cpf</p>
+                
+                <h4>Benefícios</h4>
+                @if (resultado.data?.beneficios?.Any() == true)
+                {
+                    <ul>
+                        @foreach (var beneficio in resultado.data.beneficios)
+                        {
+                            <li>
+                                <strong>Número do Benefício:</strong> @beneficio.numero_beneficio
+                                <br />
+                                <strong>Código do Tipo de Benefício:</strong> @beneficio.codigo_tipo_beneficio
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p>Nenhum benefício encontrado para este CPF.</p>
+                }
+            </div>
+        }
+        else
+        {
+            <p class="error-message">Erro ao consultar CPF. Por favor, tente novamente mais tarde.</p>
+        }
+    }
+</div>
+
+@code {
+    public string cpf;
+    public ResultadoConsulta? resultado;
+
+    public class ResultadoConsulta
+    {
+        public bool success { get; set; }
+        public Dados data { get; set; }
+    }
+
+    public class Dados
+    {
+        public string cpf { get; set; }
+        public List<Beneficio> beneficios { get; set; }
+    }
+
+    public class Beneficio
+    {
+        public string numero_beneficio { get; set; }
+        public int codigo_tipo_beneficio { get; set; }
+    }
+
+    public async Task ConsultarCpf()
+    {
+        try
+        {
+            var client = new HttpClient();
+            var response = await client.GetAsync($"http://presentationkonsicredit:5030/konsiCredit/v1/consulta-beneficios?cpf={cpf}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
+                resultado = JsonConvert.DeserializeObject<ResultadoConsulta>(responseContent);
+            }
+            else
+            {
+                resultado = new ResultadoConsulta { success = false };
+            }
+        }
+        catch (Exception ex)
+        {
+            resultado = new ResultadoConsulta { success = false };
+        }
+    }
+}

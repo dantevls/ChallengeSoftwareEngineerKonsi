@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using Application.KonsiCredit.UserBenefitsViewModels;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Services.KonsiCredit.AuthAppService;
 using Services.KonsiCredit.CachingAppService;
 using Services.KonsiCredit.ElasticSearchAppService;
 
@@ -15,16 +16,18 @@ public class BenefitsAppService : IBenefitsAppService
     private readonly IConfiguration _configuration;
     private readonly ICachingAppService _cache;
     private readonly IElasticSearchAppService _elasticSearch;
+    private readonly IAuthAppService _authAppService;
     private string? ExternalInssUri => _configuration.GetSection("ExternalInssApiUri").Value;
 
     public BenefitsAppService(IConfiguration configuration, ICachingAppService cache, 
-        IElasticSearchAppService elasticSearch)
+        IElasticSearchAppService elasticSearch, IAuthAppService authAppService)
     {
         _configuration = configuration;
         _cache = cache;
         _elasticSearch = elasticSearch;
+        _authAppService = authAppService;
     }
-    public async Task<UserBenefitsViewModel> GetUserBenefits(string cpf, string token)
+    public async Task<UserBenefitsViewModel> GetUserBenefits(string cpf)
     {
         var document = await _cache.GetDocumentAsync(RemoverCaracteresEspeciais(cpf));
 
@@ -34,6 +37,10 @@ public class BenefitsAppService : IBenefitsAppService
             var uri = $"{ExternalInssUri}/inss/consulta-beneficios?cpf={cpf}";
             try
             {
+                var userRoot = _configuration.GetSection("UserRoot").Value;
+                var passRoot = _configuration.GetSection("PassRoot").Value;
+                if (userRoot == null || passRoot == null) return new UserBenefitsViewModel();
+                var token = await _authAppService.GetUserToken(userRoot, passRoot);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 var response = await client.GetAsync(uri);
             
@@ -43,7 +50,7 @@ public class BenefitsAppService : IBenefitsAppService
                     var viewModel = JsonConvert.DeserializeObject<UserBenefitsViewModel>(userBenefitsData);
                     if (viewModel != null)
                     {
-                        var result = await _elasticSearch.CreateDocumentAsync(viewModel.data);
+                        await _elasticSearch.CreateDocumentAsync(viewModel.data);
                         await _cache.SetDocumentAsync(viewModel.data.cpf, userBenefitsData);
                         return viewModel;
                     }  
