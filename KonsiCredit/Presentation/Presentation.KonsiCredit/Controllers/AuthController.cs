@@ -22,6 +22,11 @@ public class AuthController : ControllerBase
         _authAppService = authAppService;
     }
     
+    /// <summary>
+    ///     Endpoint para buscar o token do usuário
+    /// </summary>
+    /// <param name="userViewModel"></param>
+    /// <returns> Retorna o token do usuário </returns>
     [AllowAnonymous]
     [Route("/userToken")]
     [HttpGet]

@@ -1,5 +1,4 @@
 ﻿using Domain.KonsiCredit;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.KonsiCredit.BenefitsAppService;
 
@@ -21,6 +20,11 @@ public class BenefitsController: ControllerBase
         _benefitsAppService = benefitsAppService;
     }
     
+    /// <summary>
+    ///     Endpoint para buscar os dados do beneficiario pelo cpf
+    /// </summary>
+    /// <param name="cpf"> Identificador </param>
+    /// <returns> Retorna os dados do beneficiario </returns>
     [HttpGet]
     [Route("consulta-beneficios")]
     public async Task<IActionResult> GetByCpf([FromQuery] string cpf)
