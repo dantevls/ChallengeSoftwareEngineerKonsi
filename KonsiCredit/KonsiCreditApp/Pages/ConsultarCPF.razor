@@ -1,5 +1,6 @@
 ﻿@page "/consultarCPF"
 @using Newtonsoft.Json
+@using System.Text.RegularExpressions
 
 <style>
     .container {
@@ -61,7 +62,7 @@
     <input @bind="cpf" placeholder="Digite o CPF" />
     <button @onclick="ConsultarCpf">Consultar</button>
 
-    @if (resultado != null)
+    @if (resultado != null && resultado.success)
     {
         @if (resultado.success)
         {
@@ -123,6 +124,8 @@
         try
         {
             var client = new HttpClient();
+            if (!string.IsNullOrEmpty(cpf)) cpf = RemoverCaracteresEspeciais(cpf);
+            
             var response = await client.GetAsync($"http://presentationkonsicredit:5030/konsiCredit/v1/consulta-beneficios?cpf={cpf}");
 
             if (response.IsSuccessStatusCode)
@@ -139,5 +142,12 @@
         {
             resultado = new ResultadoConsulta { success = false };
         }
+    }
+    
+    private static string RemoverCaracteresEspeciais(string input)
+    {
+        var pattern = "[^0-9]";
+        var result = Regex.Replace(input, pattern, "");
+        return result;
     }
 }

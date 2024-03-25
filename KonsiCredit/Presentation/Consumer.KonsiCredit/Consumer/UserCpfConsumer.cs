@@ -1,8 +1,6 @@
 ﻿using System.Text;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using Services.KonsiCredit.AuthAppService;
-using Services.KonsiCredit.BenefitsAppService;
 using Services.KonsiCredit.CachingAppService;
 
 namespace Consumer.KonsiCredit.Consumer;
@@ -12,14 +10,12 @@ public class UserCpfConsumer : BackgroundService
     private readonly IConfiguration _configuration;
     private readonly ICachingAppService _cache;
     private readonly IModel _channel;
-    private readonly IBenefitsAppService _benefitsAppService;
     private string? CpfQueue => _configuration.GetSection("CpfQueue").Value;
     
-    public UserCpfConsumer(IConfiguration configuration, ICachingAppService cachingAppService, IAuthAppService authAppService, IBenefitsAppService benefitsAppService)
+    public UserCpfConsumer(IConfiguration configuration, ICachingAppService cachingAppService)
     {
         _configuration = configuration;
         _cache = cachingAppService;
-        _benefitsAppService = benefitsAppService;
         _channel = CreateRabbitMqChannel();
         _channel.QueueDeclare(queue: CpfQueue,
             durable: false,

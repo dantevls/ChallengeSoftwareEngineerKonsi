@@ -9,7 +9,7 @@ WORKDIR /src
 COPY ["Presentation/Consumer.KonsiCredit/Consumer.KonsiCredit.csproj", "Presentation/Consumer.KonsiCredit/"]
 COPY ["Application/Application.KonsiCredit/Application.KonsiCredit.csproj", "Application/Application.KonsiCredit/"]
 COPY ["Domain/Domain.KonsiCredit/Domain.KonsiCredit.csproj", "Domain/Domain.KonsiCredit/"]
-COPY ["Infra/CrossCutting/Infra.CrossCutting.KonsiCredit/Infra.CrossCutting.KonsiCredit.csproj", "Infra/CrossCutting/Infra.CrossCutting.KonsiCredit/"]
+COPY ["Infra/CrossCutting/Infra.CrossCutting.ConsumerKonsiCredit/Infra.CrossCutting.ConsumerKonsiCredit.csproj", "Infra/CrossCutting/Infra.CrossCutting.ConsumerKonsiCredit/"]
 COPY ["Infra/Data/Infra.Data.KonsiCredit/Infra.Data.KonsiCredit.csproj", "Infra/Data/Infra.Data.KonsiCredit/"]
 COPY ["Services/Services.KonsiCredit/Services.KonsiCredit.csproj", "Services/Services.KonsiCredit/"]
 RUN dotnet restore "Presentation/Consumer.KonsiCredit/Consumer.KonsiCredit.csproj"

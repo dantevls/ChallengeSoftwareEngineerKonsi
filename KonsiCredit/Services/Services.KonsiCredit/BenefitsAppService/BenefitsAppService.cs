@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http.Headers;
-using System.Reflection.Metadata;
 using System.Text.RegularExpressions;
 using Application.KonsiCredit.UserBenefitsViewModels;
 using Microsoft.Extensions.Configuration;
@@ -61,7 +60,7 @@ public class BenefitsAppService : IBenefitsAppService
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw;
+                throw new Exception(e.Message);
             }
         }
 

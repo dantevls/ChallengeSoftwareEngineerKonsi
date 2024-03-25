@@ -3,9 +3,7 @@ using Application.KonsiCredit.UserBenefitsViewModels;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
-using Services.KonsiCredit.AuthAppService;
 using Services.KonsiCredit.BenefitsAppService;
-using Services.KonsiCredit.CachingAppService;
 
 namespace Services.KonsiCredit.QueueAppService;
 
@@ -16,7 +14,7 @@ public class ProducerQueueAppService : IProducerQueueAppService
     private readonly IBenefitsAppService _benefitsAppService;
     private string? CpfQueue => _configuration.GetSection("CpfQueue").Value;
 
-    public ProducerQueueAppService(IConfiguration configuration, ICachingAppService cachingAppService, 
+    public ProducerQueueAppService(IConfiguration configuration, 
         IBenefitsAppService benefitsAppService)
     {
         _configuration = configuration;

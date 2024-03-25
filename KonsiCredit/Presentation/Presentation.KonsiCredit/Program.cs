@@ -1,4 +1,4 @@
-using Registrable = Infra.CrossCutting.KonsiCredit.CachingRegistrable.Registrable;
+using Infra.CrossCutting.KonsiCredit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +14,9 @@ builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-Infra.CrossCutting.KonsiCredit.ElasticSearchRegistrable.Registrable.RegisterServices(builder.Services);
-Infra.CrossCutting.KonsiCredit.Registrable.RegisterServices(builder.Services);
 Registrable.RegisterServices(builder.Services);
+Infra.CrossCutting.KonsiCredit.ElasticSearchRegistrable.Registrable.RegisterServices(builder.Services);
+Infra.CrossCutting.KonsiCredit.CachingRegistrable.Registrable.RegisterServices(builder.Services);
 
 var app = builder.Build();
 

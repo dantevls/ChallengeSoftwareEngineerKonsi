@@ -1,7 +1,6 @@
 using Consumer.KonsiCredit.Consumer;
+using Infra.CrossCutting.ConsumerKonsiCredit;
 using Services.KonsiCredit.QueueAppService;
-using Registrable = Infra.CrossCutting.KonsiCredit.CachingRegistrable.Registrable;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,8 +12,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHostedService<UserCpfConsumer>();
 
 Registrable.RegisterServices(builder.Services);
-Infra.CrossCutting.KonsiCredit.ElasticSearchRegistrable.Registrable.RegisterServices(builder.Services);
-Infra.CrossCutting.KonsiCredit.Registrable.RegisterServices(builder.Services);
+Infra.CrossCutting.ConsumerKonsiCredit.CachingRegistrable.Registrable.RegisterServices(builder.Services);
+Infra.CrossCutting.ConsumerKonsiCredit.ElasticSearchRegistrable.Registrable.RegisterServices(builder.Services);
 
 var app = builder.Build();
 

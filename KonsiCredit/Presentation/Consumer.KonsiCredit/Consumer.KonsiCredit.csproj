@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Infra\CrossCutting\Infra.CrossCutting.KonsiCredit\Infra.CrossCutting.KonsiCredit.csproj" />
+    <ProjectReference Include="..\..\Infra\CrossCutting\Infra.CrossCutting.ConsumerKonsiCredit\Infra.CrossCutting.ConsumerKonsiCredit.csproj" />
     <ProjectReference Include="..\..\Services\Services.KonsiCredit\Services.KonsiCredit.csproj" />
   </ItemGroup>
 
