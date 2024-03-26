@@ -28,7 +28,7 @@ docker-compose up -d
 
 3. Acessar o APP:
 
-Após rodar o Docker Compose, a API estará acessível em http://localhost:8080. Você pode usar ferramentas como CURL, Postman ou seu navegador para fazer requisições à API.
+Após rodar o Docker Compose, a Interface da Aplicação estará acessível em http://localhost:8080. Você pode usar ferramentas como CURL, Postman ou seu navegador para fazer requisições à API.
 
 Parar e Remover os Contêineres:
 
@@ -36,4 +36,4 @@ Para parar e remover os contêineres Docker gerenciados pelo Docker Compose, exe
 
 docker-compose down
 
-Observação: É para acompanhar as métricas do elasticSearch é possível acessar a interface visual do Kibana acessando: http://localhost:5601/app
+Observação: É para acompanhar as métricas do elasticSearch acessando a interface visual do Kibana acessando: http://localhost:5601/app
